@@ -270,7 +270,7 @@ This is a complete configuration example with some recommended values.
 baseurl = "http://www.example.com"
 title = "johndoe"
 theme = "hugo-coder"
-languagecode = "en"
+locale = "en-US"
 defaultcontentlanguage = "en"
 
 
