@@ -1,0 +1,43 @@
+name: Hugo Build
+
+on:
+  push:
+    branches:
+      - hugo-migration-version
+
+jobs:
+  build:
+    name: Build Hugo site
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          # Hugo version must match HUGO_VERSION in netlify.toml
+          hugo-version: '0.161.1'
+          extended: true
+
+      - name: Build site
+        run: |
+          cd exampleSite
+          hugo --themesDir=../.. --logLevel info 2>&1 | tee /tmp/hugo-out.txt
+          if grep -i "deprecated" /tmp/hugo-out.txt; then
+            echo "::warning::Deprecation warnings found in Hugo build output"
+          fi
+          if grep -i "^ERROR" /tmp/hugo-out.txt; then
+            echo "::error::Build errors found"
+            exit 1
+          fi
+
+      - name: Build draft and future content (mirrors Netlify deploy-preview)
+        run: |
+          cd exampleSite
+          hugo --themesDir=../.. --buildFuture --buildDrafts --logLevel info 2>&1 | tee /tmp/hugo-draft-out.txt
+          if grep -i "^ERROR" /tmp/hugo-draft-out.txt; then
+            echo "::error::Draft/future build errors found"
+            exit 1
+          fi
