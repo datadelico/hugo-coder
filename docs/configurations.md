@@ -1,6 +1,9 @@
 # Configurations
 
 - [Configurations](#configurations)
+  - [Runtime Requirements](#runtime-requirements)
+    - [Node.js Compatibility](#nodejs-compatibility)
+    - [Environment Setup](#environment-setup)
   - [About Hugo Configurations](#about-hugo-configurations)
     - [Commenting Systems](#commenting-systems)
       - [Disqus](#disqus)
@@ -18,6 +21,34 @@
   - [Complete Example](#complete-example)
   - [Front Matter](#front-matter)
     - [Posts](#posts)
+
+## Runtime Requirements
+
+### Node.js Compatibility
+
+Hugo 0.161.1 and later require Node.js >= 22 when using the following features:
+
+- **PostCSS** (`css.PostCSS`)
+- **TailwindCSS** (`css.TailwindCSS`)
+- **Babel** (`js.Babel`)
+
+Hugo Coder does not include these dependencies by default, so Node.js is optional for most users. However, if you plan to extend the theme with custom CSS processing, ensure you have Node.js 24 LTS installed.
+
+**Recommended:** Node.js 24 LTS for production deployments and development.
+
+### Environment Setup
+
+Create a `.nvmrc` file in your project root to pin Node.js version:
+
+```
+24.20.0
+```
+
+Then use:
+
+```bash
+nvm use
+```
 
 ## About Hugo Configurations
 
